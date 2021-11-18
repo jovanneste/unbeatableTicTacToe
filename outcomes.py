@@ -1,17 +1,24 @@
 import numpy as np
 
-def checkrow(b, comsymbol):
+def checkrow(b, symbol):
 	for row in b:
-		if (str(row[0])==comsymbol) & (str(row[1])==comsymbol) & (str(row[2])==comsymbol):
+		if (str(row[0])==symbol) & (str(row[1])==symbol) & (str(row[2])==symbol):
 			return True
 	return False
 
-def win(board, comsymbol):
-	if (checkrow(board, comsymbol)) | (checkrow(board.T, comsymbol)):
+def win(board, symbol):
+	if (checkrow(board, symbol)) | (checkrow(board.T, symbol)):
 		return True
-	elif (np.array_equal(np.diagonal(board), [comsymbol,comsymbol,comsymbol])):
+	elif (np.array_equal(np.diagonal(board), [symbol,symbol,symbol])):
 		return True
-	elif (np.array_equal(np.fliplr(board).diagonal(), [comsymbol,comsymbol,comsymbol])):
+	elif (np.array_equal(np.fliplr(board).diagonal(), [symbol,symbol,symbol])):
+		return True
+	else:
+		return False
+
+
+def block(board, usersymbol):
+	if (win(board, usersymbol)):
 		return True
 	else:
 		return False

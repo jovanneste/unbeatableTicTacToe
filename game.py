@@ -11,13 +11,16 @@ def flipcoin():
 def getscore(move, board):
 	newboard = np.copy(board)
 	newboard[move[0],move[1]] = comsymbol
-
 	if (outcomes.win(newboard, comsymbol)):
 		return 10
+	newboarduser = np.copy(board)
+	newboarduser[move[0],move[1]] = usersymbol
+	if (outcomes.block(newboarduser, usersymbol)):
+		return 9
 
 
 #board = np.full((3,3), '_')
-board = np.array([['x','_','x'],
+board = np.array([['o','_','o'],
 				  ['_','_','_'],
 				  ['_','_','x']])
 
@@ -37,7 +40,7 @@ else:
 moves = np.argwhere(board=='_')
 
 for i in range(len(moves)):
-	getscore(moves[i,], board)
+	print(getscore(moves[i,], board))
 
 
 print(board)
