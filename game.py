@@ -1,9 +1,15 @@
 import numpy as np
 import random
+import pandas
+import time 
 import outcomes
 
+
+def display(board):
+	print(pandas.DataFrame(board, columns=[1,2,3], index=[1,2,3]))
+
 def flipcoin():
-		if (np.random.uniform()>0.5):
+		if (random.randint(0,1)==1):
 			return "h"
 		else:
 			return "t"
@@ -39,7 +45,7 @@ def make_a_move(board):
 		if move[0]>bestmovescore:
 			bestmovescore=move[0]
 			bestmove = move[1]
-	if bestmove!=[]:
+	if len(bestmove)!=0:
 		board[bestmove[0], bestmove[1]] = comsymbol
 		return
 
@@ -47,19 +53,19 @@ def make_a_move(board):
 		if (board[1,1]=='_'):
 			board[1,1]=comsymbol
 			return
-		elif(board[0,0]==usersymbol):
+		elif((board[0,0]==usersymbol) & (str(board[2,2])=='_')):
 			board[2,2]=comsymbol
 			return
-		elif(board[0,2]==usersymbol):
+		elif((board[0,2]==usersymbol) & (str(board[2,0])=='_')):
 			board[2,0]=comsymbol
 			return 
-		elif(board[2,0]==usersymbol):
+		elif((board[2,0]==usersymbol) & (str(board[0,2])=='_')):
 			board[0,2]=comsymbol
 			return
-		elif(board[2,2]==usersymbol):
+		elif((board[2,2]==usersymbol) & (str(board[0,0])=='_')):
 			board[0,0]=comsymbol
 			return
-	print("still going")
+
 	empty_corners=[]
 	corners = [[0,0],[2,2],[0,2],[2,0]]
 	for corner in corners:
@@ -78,27 +84,26 @@ if __name__ == '__main__':
 
 	if userguess==flipcoin():
 		print("You can start the game. You are crosses")
-		usersymbol = 'x'
-		comsymbol = 'o'
+		usersymbol, comsymbol = 'x', 'o'
 	else:
 		print("I will start the game. You are noughts")
-		usersymbol = 'o'
-		comsymbol = 'x'
+		usersymbol, comsymbol = 'o', 'x'
 
 
 	if usersymbol=='x':
-		print(board)
+		display(board)
 		print("Make a move ")
 		r = input("Row: ")
 		c =input("Column: ")
 	
 		board[int(r),int(c)] = usersymbol
-		print(board)
+		display(board)
 
 	while not done:
 		print("Computer making move...")
+		time.sleep(3)
 		make_a_move(board)
-		print(board)
+		display(board)
 		if outcomes.win(board, comsymbol):
 			print("I think i have won")
 			exit(0)
@@ -107,9 +112,9 @@ if __name__ == '__main__':
 		c =input("Column: ")
 	
 		board[int(r),int(c)] = usersymbol
-		print(board)
+		display(board)
 
-
+	
 
 
 

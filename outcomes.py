@@ -18,7 +18,5 @@ def win(board, symbol):
 
 
 def block(board, usersymbol):
-	if (win(board, usersymbol)):
-		return True
-	else:
-		return False
+	return win(board, usersymbol)
+	
